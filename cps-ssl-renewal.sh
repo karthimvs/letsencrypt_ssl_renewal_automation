@@ -2,25 +2,34 @@
 
 # Define the path to the directory where certificates are stored
 CERT_PATH="/etc/letsencrypt/live"
-DOMAIN_NAME1="cps-india.com"
-DOMAIN_NAME2="flexus.in"
+DOMAIN_NAME1="example1.com"
+DOMAIN_NAME2="example2.in"
+
+SERVER1= "webserver1"
+SERVER2= "webserver2"
+SERVER3= "webserver3"
+SERVER4= ""
+SERVER5= ""
+SERVER6= ""
+SERVER7= ""
+
 
 # Define the current date in ISO format (YYYY-MM-DD)
 CURRENT_DATE=$(date -I)
 
 # Define the server mappings (domain -> list of servers)
 declare -A SERVER_MAPPING=(
-    ["cps-india.com"]="user1@server1:/path/to/certs user2@server2:/path/to/certs user3@server3:/path/to/certs"
-    ["flexus.in"]="user1@server4:/path/to/certs user2@server5:/path/to/certs"
+    ["$DOMAIN_NAME1"]="user1@$SERVER1:/path/to/certs user2@$SERVER2:/path/to/certs user3@$SERVER3:/path/to/certs"
+    ["$DOMAIN_NAME2"]="user1@$SERVER4:/path/to/certs user2@$$SERVER5:/path/to/certs"
 )
 
 # Define the server-specific commands (domain@server -> commands)
 declare -A SERVER_COMMANDS=(
-    ["cps-india.com@server1"]="sudo systemctl reload nginx"
-    ["cps-india.com@server2"]="sudo systemctl restart apache2 && sudo systemctl status apache2"
-    ["cps-india.com@server3"]="sudo systemctl restart nginx"
-    ["flexus.in@server4"]="sudo systemctl reload httpd"
-    ["flexus.in@server5"]="sudo systemctl restart apache2 && echo 'Apache restarted successfully'"
+    ["$DOMAIN_NAME1@$SERVER1"]="sudo systemctl reload nginx"
+    ["$DOMAIN_NAME1@$SERVER2"]="sudo systemctl restart apache2 && sudo systemctl status apache2"
+    ["$DOMAIN_NAME1@$SERVER3"]="sudo systemctl restart nginx"
+    ["$DOMAIN_NAME2@$SERVER4"]="sudo systemctl restart jenkins"
+    ["$DOMAIN_NAME2@$SERVER5"]="sudo systemctl restart apache2 && echo 'Apache restarted successfully'"
 )
 
 # Loop through each certificate directory
